@@ -13,6 +13,7 @@
         <module>ms-clients</module>
         <module>ms-accounts</module>
         <module>ms-transactions</module>
+        <module>swagger</module>
     </modules>
 
     <properties>
