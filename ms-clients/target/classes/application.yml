@@ -13,4 +13,4 @@ spring:
         access-key: "cbgomes"
         secret-key: "gbgomes"
       dynamodb:
-        endpoint: http://localhost:4566
+        endpoint: http://host.docker.internal:4566

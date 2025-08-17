@@ -66,4 +66,16 @@ public class TransactionDomain {
                 .createdAt(transactionDomain.createdAt)
                 .build();
     }
+
+    public static TransactionEntity toEntityFailed(TransactionDomain transactionDomain) {
+        return TransactionEntity.builder()
+                .sourceAccount(transactionDomain.sourceAccount)
+                .destinationAccount(transactionDomain.destinationAccount)
+                .amountTransaction(transactionDomain.amountTransaction)
+                .typeTransaction(transactionDomain.typeTransaction)
+                .statusTransaction(StatusTransaction.FAILED)
+                .codeTransaction(transactionDomain.codeTransaction)
+                .createdAt(transactionDomain.createdAt)
+                .build();
+    }
 }

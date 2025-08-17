@@ -24,7 +24,7 @@ public class CloudWatchLogService {
 
         PutLogEventsRequest.Builder requestBuilder = PutLogEventsRequest.builder()
                 .logGroupName("ms-transactions-logs")
-                .logStreamName("ms-transactions")
+                .logStreamName("transactions-stream")
                 .logEvents(List.of(logEvent));
 
 

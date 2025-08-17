@@ -4,11 +4,13 @@ import br.com.acme.domain.StatusTransaction;
 import br.com.acme.domain.model.TransactionDomain;
 import br.com.acme.repository.TransactionRepository;
 import br.com.acme.usecases.*;
+import br.com.acme.usecases.exceptions.InsufficientBalanceException;
 import br.com.acme.usecases.external.sns.INotificationTransactionsService;
 import br.com.acme.usecases.external.sync.CheckAccountBalanceClient;
 import lombok.AllArgsConstructor;
 import org.springframework.http.HttpStatusCode;
 import org.springframework.stereotype.Service;
+import org.springframework.web.ErrorResponse;
 import org.springframework.web.server.ResponseStatusException;
 
 import java.math.BigDecimal;
@@ -57,7 +59,7 @@ public class PerformTransactionService implements IPerformTransactionService {
     }
 
     private void handleWithdraw(TransactionDomain transactionDomain) {
-        validateBalance(transactionDomain.getSourceAccount());
+        validateBalance(transactionDomain);
 
         var pendingEntity = transactionRepository.save(TransactionDomain.toEntityPending(transactionDomain));
         transactionDomain.setCodeTransaction(pendingEntity.getCodeTransaction());
@@ -73,7 +75,7 @@ public class PerformTransactionService implements IPerformTransactionService {
     }
 
     private void handleTransfer(TransactionDomain transactionDomain) {
-        validateBalance(transactionDomain.getSourceAccount());
+        validateBalance(transactionDomain);
 
         var pendingEntity = transactionRepository.save(TransactionDomain.toEntityPending(transactionDomain));
         transactionDomain.setCodeTransaction(pendingEntity.getCodeTransaction());
@@ -89,11 +91,20 @@ public class PerformTransactionService implements IPerformTransactionService {
         completeTransaction(transactionDomain);
     }
 
-    private void validateBalance(String account) {
-        var balance = accountBalanceClient.checkAccountBalance(account);
+    private void validateBalance(TransactionDomain transactionDomain) {
+        var balance = accountBalanceClient.checkAccountBalance(transactionDomain.getSourceAccount());
         if (balance.compareTo(BigDecimal.ZERO) <= 0) {
-            throw new ResponseStatusException(HttpStatusCode.valueOf(401));
+            throw new InsufficientBalanceException("Insufficient balance to make the transfer");
         }
+    }
+
+    private void failedTransaction(TransactionDomain transactionDomain) {
+        var filedEntity = transactionRepository.save(TransactionDomain.toEntityFailed(transactionDomain));
+        var filedDomain = TransactionDomain.fromEntity(filedEntity);
+        notificationService.sendNotificationTransaction(filedDomain);
+
+        transactionDomain.setStatusTransaction(filedDomain.getStatusTransaction());
+        transactionDomain.setCodeTransaction(filedDomain.getCodeTransaction());
     }
 
     private void completeTransaction(TransactionDomain transactionDomain) {

@@ -5,15 +5,19 @@ import br.com.acme.controller.request.TransactionRequest;
 import br.com.acme.controller.response.TransactionConfirmedResponse;
 import br.com.acme.domain.model.TransactionDomain;
 import br.com.acme.usecases.*;
-import lombok.AllArgsConstructor;
 import org.springframework.web.bind.annotation.RestController;
 
 @RestController
-@AllArgsConstructor
+
 public class TransactionController implements TransactionResource {
 
     private final IPerformTransactionService performTransactionService;
     private final CloudWatchLogService cloudWatchLogService;
+
+    public TransactionController(IPerformTransactionService performTransactionService, CloudWatchLogService cloudWatchLogService) {
+        this.performTransactionService = performTransactionService;
+        this.cloudWatchLogService = cloudWatchLogService;
+    }
 
     @Override
     public TransactionConfirmedResponse performTransaction(TransactionRequest request) {

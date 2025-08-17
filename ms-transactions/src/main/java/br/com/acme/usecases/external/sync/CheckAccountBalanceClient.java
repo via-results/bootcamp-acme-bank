@@ -6,7 +6,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 
 import java.math.BigDecimal;
 
-@FeignClient(name = "checkAccountBalanceClient", url = "http://localhost:8082/api/v1/accounts")
+@FeignClient(name = "checkAccountBalanceClient", url = "${client.url}")
 public interface CheckAccountBalanceClient {
 
     @GetMapping(value = "/check-balance", consumes = "application/json", produces = "application/json")

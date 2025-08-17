@@ -6,8 +6,8 @@ import org.springframework.web.bind.annotation.RequestParam;
 
 import java.math.BigDecimal;
 
-@FeignClient(name = "performDepositAccountClient", url = "http://localhost:8082/api/v1/accounts")
+@FeignClient(name = "performDepositAccountClient", url = "${client.url}")
 public interface PerformDepositAccountClient {
     @GetMapping("/perform-deposit")
-    String performDeposit(@RequestParam("accountNumber") String accountNumber, @RequestParam("amount") BigDecimal amount);
+    void performDeposit(@RequestParam("accountNumber") String accountNumber, @RequestParam("amount") BigDecimal amount);
 }

@@ -6,9 +6,9 @@ import org.springframework.web.bind.annotation.RequestParam;
 
 import java.math.BigDecimal;
 
-@FeignClient(name = "performWithdrawAccountClient", url = "http://localhost:8082/api/v1/accounts")
+@FeignClient(name = "performWithdrawAccountClient", url = "${client.url}")
 public interface PerformWithdrawAccountClient {
 
     @GetMapping("/perform-withdraw")
-    String performWithdraw(@RequestParam("accountNumber") String accountNumber, @RequestParam("amount") BigDecimal amount);
+    void performWithdraw(@RequestParam("accountNumber") String accountNumber, @RequestParam("amount") BigDecimal amount);
 }
