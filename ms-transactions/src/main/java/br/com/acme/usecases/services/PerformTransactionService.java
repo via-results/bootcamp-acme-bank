@@ -8,12 +8,7 @@ import br.com.acme.usecases.exceptions.InsufficientBalanceException;
 import br.com.acme.usecases.external.sns.INotificationTransactionsService;
 import br.com.acme.usecases.external.sync.CheckAccountBalanceClient;
 import lombok.AllArgsConstructor;
-import org.springframework.http.HttpStatusCode;
 import org.springframework.stereotype.Service;
-import org.springframework.web.ErrorResponse;
-import org.springframework.web.server.ResponseStatusException;
-
-import java.math.BigDecimal;
 import java.time.LocalDateTime;
 
 @Service
@@ -21,6 +16,7 @@ import java.time.LocalDateTime;
 public class PerformTransactionService implements IPerformTransactionService {
 
     private final TransactionRepository transactionRepository;
+
     private final INotificationTransactionsService notificationService;
     private final CheckAccountBalanceClient accountBalanceClient;
 
@@ -93,7 +89,7 @@ public class PerformTransactionService implements IPerformTransactionService {
 
     private void validateBalance(TransactionDomain transactionDomain) {
         var balance = accountBalanceClient.checkAccountBalance(transactionDomain.getSourceAccount());
-        if (balance.compareTo(BigDecimal.ZERO) <= 0) {
+        if (transactionDomain.hasNoBalance(balance)) {
             throw new InsufficientBalanceException("Insufficient balance to make the transfer");
         }
     }

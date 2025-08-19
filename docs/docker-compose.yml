@@ -1,0 +1,25 @@
+networks:
+  internal_net:
+    driver: bridge
+
+services:
+  localstack:
+    image: localstack/localstack:3
+    container_name: localstack
+    environment:
+      SERVICES: sns,sqs,s3,lambda,dynamodb
+      DEBUG: 1
+      LOCALSTACK_API_KEY: ${LOCALSTACK_API_KEY-}
+      EDGE_PORT: 4566
+      AWS_DEFAULT_REGION: us-east-1
+    ports:
+      - "4566:4566"   # Endpoint principal
+      - "4510-4559:4510-4559"
+    volumes:
+      - localstack_data:/var/lib/localstack
+      - /var/run/docker.sock:/var/run/docker.sock
+    networks:
+      - internal_net
+volumes:
+  postgres_data:
+  localstack_data:

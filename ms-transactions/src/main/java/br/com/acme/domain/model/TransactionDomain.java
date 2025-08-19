@@ -19,6 +19,7 @@ public class TransactionDomain {
 
     private Long id;
     private String sourceAccount;
+    private String emailSourceAccount;
     private String destinationAccount;
     private BigDecimal amountTransaction;
     private TypeTransaction typeTransaction;

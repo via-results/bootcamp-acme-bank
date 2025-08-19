@@ -18,6 +18,11 @@ public interface ClientsResources {
     @GetMapping("/{id}")
     ClientResponse getClient(@PathVariable("id") Long id);
 
+    @GetMapping("/email/{email}")
+    ClientResponse getClientEmail(@PathVariable("email") String email);
+
+    @GetMapping("/document/{document}")
+    ClientResponse getClientDocument(@PathVariable("document") String document);
 
     @DeleteMapping("/{id}")
     String deleteClient(@PathVariable("id") Long id);

@@ -27,6 +27,9 @@ public class TransactionEntity {
     @Column(name = "source_account")
     private String sourceAccount;
 
+    @Column(name = "source_email")
+    private String emailSourceAccount;
+
     @Column(name = "destination_account")
     private String destinationAccount;
 

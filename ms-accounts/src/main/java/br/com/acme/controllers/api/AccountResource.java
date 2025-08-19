@@ -16,7 +16,10 @@ public interface AccountResource {
     BigDecimal checkBalanceAccount(@RequestParam("accountNumber") String accountNumber);
 
     @GetMapping("/client-document")
-    AccountResponse verifyAccountClientDocument(@RequestParam("clientDocument") String clientDocument);
+    AccountResponse getAccountClientDocument(@RequestParam("clientDocument") String clientDocument);
+
+    @GetMapping("/client-account-number")
+    AccountResponse getAccountClientAccountNumber(@RequestParam("accountNumber") String accountNumber);
 
     @GetMapping("/perform-deposit")
     String performDeposit(@RequestParam("accountNumber") String accountNumber, @RequestParam("amount") BigDecimal amount);

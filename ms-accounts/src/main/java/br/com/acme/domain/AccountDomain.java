@@ -1,9 +1,6 @@
 package br.com.acme.domain;
 
-import br.com.acme.domain.model.Account;
 import br.com.acme.domain.model.AccountEntity;
-import br.com.acme.repository.dynamo.AccountRepositoryDynamoDB;
-import br.com.acme.repository.postgres.AccountRepositoryPostgres;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;

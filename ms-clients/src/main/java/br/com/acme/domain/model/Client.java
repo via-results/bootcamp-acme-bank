@@ -5,6 +5,8 @@ import lombok.*;
 import software.amazon.awssdk.enhanced.dynamodb.mapper.annotations.DynamoDbAttribute;
 import software.amazon.awssdk.enhanced.dynamodb.mapper.annotations.DynamoDbBean;
 import software.amazon.awssdk.enhanced.dynamodb.mapper.annotations.DynamoDbPartitionKey;
+import software.amazon.awssdk.enhanced.dynamodb.mapper.annotations.DynamoDbSecondaryPartitionKey;
+
 import java.math.BigDecimal;
 import java.time.LocalDateTime;
 
@@ -34,11 +36,13 @@ public class Client {
     }
 
     @DynamoDbAttribute("email")
+    @DynamoDbSecondaryPartitionKey(indexNames = {"email-index"})
     public String getEmail() {
         return email;
     }
 
     @DynamoDbAttribute("document")
+    @DynamoDbSecondaryPartitionKey(indexNames = {"document-index"})
     public String getDocument() {
         return document;
     }

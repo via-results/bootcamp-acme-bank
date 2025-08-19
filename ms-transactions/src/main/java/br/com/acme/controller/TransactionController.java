@@ -8,7 +8,6 @@ import br.com.acme.usecases.*;
 import org.springframework.web.bind.annotation.RestController;
 
 @RestController
-
 public class TransactionController implements TransactionResource {
 
     private final IPerformTransactionService performTransactionService;

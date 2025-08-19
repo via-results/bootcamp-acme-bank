@@ -4,10 +4,7 @@ import br.com.acme.controllers.api.ClientsResources;
 import br.com.acme.controllers.requests.ClientRequest;
 import br.com.acme.controllers.response.ClientResponse;
 import br.com.acme.domain.ClientDomain;
-import br.com.acme.usecases.ICreateClientService;
-import br.com.acme.usecases.IDeleteClientByIdService;
-import br.com.acme.usecases.IFindClientByIdService;
-import br.com.acme.usecases.IListAllClientsService;
+import br.com.acme.usecases.*;
 import br.com.acme.utils.Utils;
 import lombok.AllArgsConstructor;
 import org.springframework.web.bind.annotation.RestController;
@@ -26,6 +23,8 @@ public class ClientController implements ClientsResources {
     private final IListAllClientsService listAllClientsService;
     private final IFindClientByIdService findClientByIdService;
     private final IDeleteClientByIdService deleteClientByIdService;
+    private final IFindClientByEmailService findClientByEmailService;
+    private final IFindClientByDocumentService findClientByDocumentService;
 
     @Override
     public ClientResponse create(ClientRequest request) {
@@ -40,6 +39,16 @@ public class ClientController implements ClientsResources {
     @Override
     public ClientResponse getClient(Long id) {
         return createResponse(this.findClientByIdService.find(id));
+    }
+
+    @Override
+    public ClientResponse getClientEmail(String email) {
+        return createResponse(this.findClientByEmailService.find(email));
+    }
+
+    @Override
+    public ClientResponse getClientDocument(String document) {
+        return createResponse(this.findClientByDocumentService.find(document));
     }
 
     @Override

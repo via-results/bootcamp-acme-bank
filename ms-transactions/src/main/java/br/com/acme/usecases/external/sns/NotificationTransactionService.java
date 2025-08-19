@@ -18,6 +18,7 @@ public class NotificationTransactionService implements INotificationTransactions
             SnsClient notificationTransactionService,
             ObjectMapper objectMapper,
             @Value("${sns.topic-arn-transaction}") String topicArn) {
+
         this.notificationTransactionService = notificationTransactionService;
         this.objectMapper = objectMapper;
         this.topicArn = topicArn;

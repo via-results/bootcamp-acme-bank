@@ -37,8 +37,13 @@ public class AccountController implements AccountResource {
     }
 
     @Override
-    public AccountResponse verifyAccountClientDocument(String clientDocument) {
+    public AccountResponse getAccountClientDocument(String clientDocument) {
         return accountResponse(this.getAccountByClientDocumentService.getAccountByClientDocument(clientDocument));
+    }
+
+    @Override
+    public AccountResponse getAccountClientAccountNumber(String accountNumber) {
+        return null;
     }
 
     @Override

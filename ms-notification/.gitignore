@@ -1,5 +1,5 @@
-target/
 /target/
-*/target
 .DS_Store
 .idea
+*.target
+/target

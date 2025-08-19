@@ -42,4 +42,3 @@ config:
 
 sns:
   topic-arn-transaction: arn:aws:sns:us-east-1:000000000000:transactions
-

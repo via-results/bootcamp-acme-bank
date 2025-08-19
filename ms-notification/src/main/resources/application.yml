@@ -1,0 +1,10 @@
+server:
+  port: 8084
+
+spring:
+  application:
+    name: ms-notification
+  cloud:
+    aws:
+      region:
+        static: us-east-1
